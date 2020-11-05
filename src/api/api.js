@@ -6,15 +6,11 @@ export default {
     var api = axios.create({
       baseURL: 'https://c1vdx9kkf4.execute-api.ap-northeast-1.amazonaws.com/dev',
       // withCredentials: true,
-      headers: {
-        'Accept-Language': 'ja',
-        'Accept': 'application/json',
-        "Access-Control-Allow-Headers" : "Content-Type",
-        "Access-Control-Allow-Headers" : "application/json",
-        "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json'
-      },
+      // 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
+      // headers: {
+      //   'Access-Control-Allow-Origin': '*',
+      //   'Content-Type': 'application/x-www-form-urlencoded'
+      // },
       timeout: 60000
     })
     return api

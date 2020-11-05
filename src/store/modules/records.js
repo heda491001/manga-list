@@ -13,6 +13,7 @@ const actions = {
   getAllRecords ({ commit }) {
     list.getRecord_demo(records => {
       commit('setRecords', records)
+      console.log('commit set Records')
     })
   }
 }

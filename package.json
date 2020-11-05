@@ -19,7 +19,8 @@
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
     "xe-utils": "^2.7.13",
-    "vxe-table": "^2.9.23"
+    "vxe-table": "^2.9.23",
+    "qs": "6.9.4"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
