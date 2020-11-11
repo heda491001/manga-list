@@ -18,7 +18,7 @@
           </vxe-table-column>
           <vxe-table-column field="price" sortable title="price"></vxe-table-column>
           <vxe-table-column field="inventory" sortable title="inventory"></vxe-table-column>
-          <vxe-table-column field="updatetime" sortable title="inventory"></vxe-table-column>
+          <vxe-table-column field="updatetime" sortable title="updatetime"></vxe-table-column>
         </vxe-table>
   </div>
 </template>
