@@ -10,7 +10,7 @@
           highlight-hover-row
           :align="allAlign"
           :data="recordslist">
-          <vxe-table-column type="seq" sortable title="seq" width="60"></vxe-table-column>
+          <vxe-table-column field="id" sortable title="id" width="60"></vxe-table-column>
           <vxe-table-column field="title" sortable title="title" :filters="[{ data: '' }]" :filter-method="filterMethod">
             <template v-slot:filter="{ $panel, column }">
               <input type="type" v-for="(option, index) in column.filters" :key="index" v-model="option.data" @input="$panel.changeOption($event, !!option.data, option)">
@@ -18,6 +18,7 @@
           </vxe-table-column>
           <vxe-table-column field="price" sortable title="price"></vxe-table-column>
           <vxe-table-column field="inventory" sortable title="inventory"></vxe-table-column>
+          <vxe-table-column field="updatetime" sortable title="inventory"></vxe-table-column>
         </vxe-table>
   </div>
 </template>
