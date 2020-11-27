@@ -7,10 +7,10 @@ export default {
       baseURL: 'https://w6iy4rqrfk.execute-api.ap-northeast-1.amazonaws.com/dev',
       // withCredentials: true,
       // 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'
-      // headers: {
-      //   'Access-Control-Allow-Origin': '*',
-      //   'Content-Type': 'application/x-www-form-urlencoded'
-      // },
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      },
       timeout: 60000
     })
     return api

@@ -10,7 +10,7 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'main'
+      msg: 'hello world'
     }
   }
 }

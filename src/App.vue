@@ -2,7 +2,7 @@
   <div id="app">
     <p>update time 2020/10/27 19:24</p>
     <router-link to="/HelloWorld">HelloWorld</router-link>
-    <router-link to="/add">add</router-link>
+    <router-link to="/test">test</router-link>
     <router-link to="/list">list</router-link>
     <router-view/>
   </div>
@@ -19,8 +19,8 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  text-align: left;
   color: #2c3e50;
-  margin-top: 60px;
+  margin: 20px;
 }
 </style>
