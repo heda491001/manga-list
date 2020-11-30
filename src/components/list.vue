@@ -5,7 +5,7 @@
     <div>
       <vxe-toolbar>
         <template v-slot:buttons>
-          <vxe-button @click="reloadList()">reload</vxe-button>
+          <vxe-button icon="fa fa-refresh" @click="reloadList()">reload</vxe-button>
           <vxe-button icon="fa fa-plus" @click="insertEvent()">add</vxe-button>
         </template>
       </vxe-toolbar>
