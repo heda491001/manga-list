@@ -5,7 +5,9 @@
     <div>
       <vxe-toolbar>
         <template v-slot:buttons>
-          <vxe-button icon="fa fa-refresh" @click="reloadList()">reload</vxe-button>
+          <vxe-button icon="fa fa-refresh" @click="reloadList()"
+            >reload</vxe-button
+          >
           <vxe-button icon="fa fa-plus" @click="insertEvent()">add</vxe-button>
         </template>
       </vxe-toolbar>
@@ -55,6 +57,7 @@
           field="status"
           sortable
           title="status"
+          :formatter="formatstatus"
         ></vxe-table-column>
         <vxe-table-column
           field="updatetime"
@@ -63,8 +66,16 @@
         ></vxe-table-column>
         <vxe-table-column title="操作" width="100" show-overflow>
           <template slot-scope="{ row }">
-            <vxe-button type="text" icon="fa fa-edit" @click="editEvent(row)"></vxe-button>
-            <vxe-button type="text" icon="fa fa-trash-o" @click="removeEvent(row)"></vxe-button>
+            <vxe-button
+              type="text"
+              icon="fa fa-edit"
+              @click="editEvent(row)"
+            ></vxe-button>
+            <vxe-button
+              type="text"
+              icon="fa fa-trash-o"
+              @click="removeEvent(row)"
+            ></vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -97,7 +108,8 @@
 /* eslint-disable */
 import { mapState } from "vuex";
 import XEUtils from "xe-utils";
-import 'font-awesome/css/font-awesome.css';
+import "font-awesome/css/font-awesome.css";
+import { reduceIterate } from "xe-utils/methods";
 
 export default {
   name: "list",
@@ -144,11 +156,9 @@ export default {
           itemRender: {
             name: "$select",
             options: [
-              { label: "1", value: "1" },
-              { label: "2", value: "2" },
-              { label: "3", value: "3" },
-              { label: "4", value: "4" },
-              { label: "5", value: "5" },
+              { label: "未購入", value: "1" },
+              { label: "本を購入済み", value: "2" },
+              { label: "kindleを購入済み", value: "3" },
             ],
           },
         },
@@ -179,9 +189,22 @@ export default {
     filterMethod({ option, row }) {
       return String(row.title).startsWith(option.data);
     },
-    formatDate({ cellValue }) {
-      return { cellValue };
-      // return XEUtils.toDateString(cellValue, "yyyy-MM-dd HH:mm:ss");
+    formatstatus({ cellValue }) {
+      const flag = parseInt(cellValue);
+      switch (flag) {
+        case 1:
+          return "未購入";
+          break;
+        case 2:
+          return "本を購入済み";
+          break;
+        case 3:
+          return "kindleを購入済み";
+          break;
+        default:
+          return "undefeat";
+          break;
+      }
     },
     reloadList() {
       this.$store.dispatch("records/getAllRecords");
@@ -215,15 +238,14 @@ export default {
         this.submitLoading = false;
         this.showEdit = false;
         if (this.selectRow) {
-          this.$XMassignodal.message({
-            message: "edit success",
-            status: "success",
-          });
-          Object.assign(this.selectRow, this.formData);
-        } else {
-          this.$XModal.message({ message: "add success", status: "success" });
+          // 临时使用insert的api，如果同样的数据应该会覆盖
           this.$store.dispatch("records/putRecords", this.formData);
+          this.$XModal.message({ message: "edit success", status: "success" });
+        } else {
+          this.$store.dispatch("records/putRecords", this.formData);
+          this.$XModal.message({ message: "add success", status: "success" });
         }
+        this.$store.dispatch("records/getAllRecords");
       }, 500);
     },
   },
