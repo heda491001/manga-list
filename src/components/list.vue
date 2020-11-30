@@ -6,7 +6,7 @@
       <vxe-toolbar>
         <template v-slot:buttons>
           <vxe-button @click="reloadList()">reload</vxe-button>
-          <vxe-button icon="plus" @click="insertEvent()">add</vxe-button>
+          <vxe-button icon="fa fa-plus" @click="insertEvent()">add</vxe-button>
         </template>
       </vxe-toolbar>
       <vxe-table
@@ -63,8 +63,8 @@
         ></vxe-table-column>
         <vxe-table-column title="操作" width="100" show-overflow>
           <template slot-scope="{ row }">
-            <vxe-button @click="editEvent(row)">edit</vxe-button>
-            <vxe-button @click="removeEvent(row)">del</vxe-button>
+            <vxe-button type="text" icon="fa fa-edit" @click="editEvent(row)"></vxe-button>
+            <vxe-button type="text" icon="fa fa-trash-o" @click="removeEvent(row)"></vxe-button>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -97,6 +97,7 @@
 /* eslint-disable */
 import { mapState } from "vuex";
 import XEUtils from "xe-utils";
+import 'font-awesome/css/font-awesome.css';
 
 export default {
   name: "list",
