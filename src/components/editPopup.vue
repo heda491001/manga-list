@@ -23,15 +23,23 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 
 export default {
   name: 'editPopup',
-  computed: mapState({
-    selectRow: (state) => state.formData.selectRow,
-    showEdit: (state) => state.formData.showEdit,
-    formData: (state) => state.formData.formData
-  }),
+  computed: {
+    selectRow: {
+      get () { return this.$store.state.formData.selectRow },
+      set (val) { this.$store.commit('formData/setSelectRow', val) }
+    },
+    showEdit: {
+      get () { return this.$store.state.formData.showEdit },
+      set (val) { this.$store.commit('formData/setShowEdit', val) }
+    },
+    formData: {
+      get () { return this.$store.state.formData.formData },
+      set (val) { this.$store.commit('formData/setFormData', val) }
+    }
+  },
   data () {
     return {
       submitLoading: false,

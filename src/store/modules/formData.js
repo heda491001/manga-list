@@ -4,8 +4,10 @@ const state = () => ({
   formData: null
 })
 
-const getters = {}
+// getters
+// const getters = {}
 
+// mutations
 const mutations = {
   setSelectRow (state, selectRow) {
     state.selectRow = selectRow
@@ -21,6 +23,6 @@ const mutations = {
 export default {
   namespaced: true,
   state,
-  getters,
+  // getters,
   mutations
 }

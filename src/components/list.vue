@@ -92,78 +92,23 @@ import editPopup from './editPopup.vue'
 export default {
   name: 'list',
   components: { editPopup },
-  // data () {
-  //   return {
-  //     submitLoading: false,
-  //     selectRow: null,
-  //     showEdit: false,
-  //     formData: null,
-  //     formRules: {
-  //       title: [{ required: true, message: 'please enter the book title' }],
-  //       author: [{ required: true, message: 'please enter the author' }]
-  //     },
-  //     formItems: [
-  //       {
-  //         title: 'book information',
-  //         span: 24,
-  //         titleAlign: 'left',
-  //         titleWidth: 200,
-  //         titlePrefix: { icon: 'fa fa-address-card-o' }
-  //       },
-  //       {
-  //         field: 'title',
-  //         title: 'title',
-  //         span: 12,
-  //         itemRender: {
-  //           name: '$input',
-  //           props: { placeholder: 'please enter the book title' }
-  //         }
-  //       },
-  //       {
-  //         field: 'author',
-  //         title: 'author',
-  //         span: 12,
-  //         itemRender: {
-  //           name: '$input',
-  //           props: { placeholder: 'please enter the author' }
-  //         }
-  //       },
-  //       {
-  //         field: 'status',
-  //         title: 'status',
-  //         span: 12,
-  //         itemRender: {
-  //           name: '$select',
-  //           options: [
-  //             { label: '未購入', value: '1' },
-  //             { label: '本を購入済み', value: '2' },
-  //             { label: 'kindleを購入済み', value: '3' }
-  //           ]
-  //         }
-  //       },
-  //       {
-  //         align: 'center',
-  //         span: 24,
-  //         titleAlign: 'left',
-  //         itemRender: {
-  //           name: '$buttons',
-  //           children: [
-  //             {
-  //               props: { type: 'submit', content: 'submit', status: 'primary' }
-  //             },
-  //             { props: { type: 'reset', content: 'reset' } }
-  //           ]
-  //         }
-  //       }
-  //     ]
-  //   }
-  // },
-  computed: mapState({
-    recordslist: (state) => state.records.all,
-    selectRow: (state) => state.formData.selectRow,
-    showEdit: (state) => state.formData.showEdit,
-    formData: (state) => state.formData.formData
-  }),
+  computed: {
+    selectRow: {
+      get () { return this.$store.state.formData.selectRow },
+      set (val) { this.$store.commit('formData/setSelectRow', val) }
+    },
+    showEdit: {
+      get () { return this.$store.state.formData.showEdit },
+      set (val) { this.$store.commit('formData/setShowEdit', val) }
+    },
+    formData: {
+      get () { return this.$store.state.formData.formData },
+      set (val) { this.$store.commit('formData/setFormData', val) }
+    },
+    ...mapState({
+      recordslist: state => state.records.all
+    })
+  },
   created () {
     this.$store.dispatch('records/getAllRecords')
   },
@@ -210,22 +155,6 @@ export default {
       this.selectRow = row
       this.showEdit = true
     }
-    // submitEvent() {
-    //   this.submitLoading = true;
-    //   setTimeout(() => {
-    //     this.submitLoading = false;
-    //     this.showEdit = false;
-    //     if (this.selectRow) {
-    //       // 临时使用insert的api，如果同样的数据应该会覆盖
-    //       this.$store.dispatch("records/putRecords", this.formData);
-    //       this.$XModal.message({ message: "edit success", status: "success" });
-    //     } else {
-    //       this.$store.dispatch("records/putRecords", this.formData);
-    //       this.$XModal.message({ message: "add success", status: "success" });
-    //     }
-    //     this.$store.dispatch("records/getAllRecords");
-    //   }, 500);
-    // },
   }
 }
 </script>
