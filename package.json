@@ -20,7 +20,8 @@
     "vuex": "^3.6.0",
     "xe-utils": "^2.8.2",
     "vxe-table": "^2.10.3",
-    "qs": "6.9.4"
+    "qs": "6.9.4",
+    "font-awesome": "^4.7.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

@@ -13,15 +13,22 @@ const actions = {
   getAllRecords ({ commit }) {
     list.getRecordsList(records => {
       commit('setRecords', records)
-      console.log('commit set Records')
     })
   },
   putRecords ({ commit }, record) {
     console.log('action put')
     list.putRecordList(msg => {
-      commit('insertRecords', record)
-      window.alert(msg)
+      console.log(msg)
     }, record)
+    commit('insertRecords', record)
+  },
+  removeRecord ({commit}, record) {
+    console.log('action remove')
+    list.deleteRecord(
+      msg => {
+        console.log(msg)
+      }, record)
+    commit('removeRecord', record)
   }
 }
 
@@ -31,8 +38,17 @@ const mutations = {
     state.all = records
   },
   insertRecords (state, record) {
-    state.all.put(record)
+    state.all.push(record)
     console.log('mutations put')
+  },
+  removeRecord (state, record) {
+    console.log('mutation remove')
+    var index = state.all.indexOf(record)
+    if (index > -1) {
+      state.all.splice(index, 1)
+    } else {
+      console.log('data not found')
+    }
   }
 }
 

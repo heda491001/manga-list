@@ -1,16 +1,20 @@
 <template>
   <div class="hello">
-    <h1>this is a test </h1>
+    <h1>this is a test</h1>
     <h2>{{ msg }}</h2>
+    <editPopup v-bind:showEdit="showEdit"></editPopup>
   </div>
 </template>
 
 <script>
+import editPopup from './editPopup.vue'
 export default {
   name: 'HelloWorld',
+  components: { editPopup },
   data () {
     return {
-      msg: 'hello world'
+      msg: 'hello world',
+      showEdit: true
     }
   }
 }
@@ -18,7 +22,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 ul {
