@@ -79,7 +79,7 @@
           </template>
         </vxe-table-column>
       </vxe-table>
-      <editPopup></editPopup>
+      <editPopup :selectRow=this.selectRow :formData=this.selectRow></editPopup>
     </div>
   </div>
 </template>
@@ -92,18 +92,17 @@ import editPopup from './editPopup.vue'
 export default {
   name: 'list',
   components: { editPopup },
+  data () {
+    return {
+      selectRow: null,
+      formData: null
+    }
+  },
+
   computed: {
-    selectRow: {
-      get () { return this.$store.state.formData.selectRow },
-      set (val) { this.$store.commit('formData/setSelectRow', val) }
-    },
     showEdit: {
-      get () { return this.$store.state.formData.showEdit },
-      set (val) { this.$store.commit('formData/setShowEdit', val) }
-    },
-    formData: {
-      get () { return this.$store.state.formData.formData },
-      set (val) { this.$store.commit('formData/setFormData', val) }
+      get () { return this.$store.state.popup.showEdit },
+      set (val) { this.$store.commit('popup/setShowEdit', val) }
     },
     ...mapState({
       recordslist: state => state.records.all
