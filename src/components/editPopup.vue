@@ -29,8 +29,8 @@ export default {
   props: ['selectRow', 'formData'],
   computed: {
     showEdit: {
-      get () { return this.$store.state.popup.showEdit },
-      set (val) { this.$store.commit('popup/setShowEdit', val) }
+      get () { return this.$parent.showEdit },
+      set (val) { this.$parent.showEdit = val }
     }
   },
   data () {

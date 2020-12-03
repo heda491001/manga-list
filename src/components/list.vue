@@ -79,7 +79,7 @@
           </template>
         </vxe-table-column>
       </vxe-table>
-      <editPopup :selectRow=this.selectRow :formData=this.selectRow></editPopup>
+      <editPopup :selectRow=selectRow :formData=formData></editPopup>
     </div>
   </div>
 </template>
@@ -94,6 +94,7 @@ export default {
   components: { editPopup },
   data () {
     return {
+      showEditflag: false,
       selectRow: null,
       formData: null
     }
@@ -101,8 +102,8 @@ export default {
 
   computed: {
     showEdit: {
-      get () { return this.$store.state.popup.showEdit },
-      set (val) { this.$store.commit('popup/setShowEdit', val) }
+      get () { return this.showEditflag },
+      set (val) { this.showEditflag = val }
     },
     ...mapState({
       recordslist: state => state.records.all
