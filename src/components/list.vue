@@ -154,6 +154,13 @@ export default {
       }
       this.selectRow = row
       this.showEdit = true
+    },
+    removeEvent (row) {
+      this.$XModal.confirm('您确定要删除「' + row.title.toString() + '」 ?').then((type) => {
+        if (type === 'confirm') {
+          this.$store.dispatch('records/removeRecord', row)
+        }
+      })
     }
   }
 }

@@ -110,7 +110,6 @@ export default {
           this.$store.dispatch('records/putRecords', this.formData)
           this.$XModal.message({ message: 'add success', status: 'success' })
         }
-        this.$store.dispatch('records/getAllRecords')
       }, 500)
     }
   }
