@@ -10,9 +10,7 @@
         :refresh="{query:reloadList,icon:'fa fa-refresh'}">
         <template v-slot:buttons>
           <vxe-button icon="fa fa-plus" @click="insertEvent()">add</vxe-button>
-          <vxe-button>
-            <template v-slot>search</template>
-          </vxe-button>
+          <vxe-button icon="fa fa-search" @click="search()">search</vxe-button>
           <vxe-input v-model="searchKeyword.title" placeholder="title"></vxe-input>
           <vxe-input v-model="searchKeyword.author" placeholder="author"></vxe-input>
         </template>
@@ -149,7 +147,7 @@ export default {
     })
   },
   created () {
-    this.$store.dispatch('records/getAllRecords')
+    this.$store.dispatch('records/getAllRecords', this.searchKeyword)
   },
   methods: {
     filterTitleMethod ({ option, row }) {
@@ -171,11 +169,15 @@ export default {
           return 'undefeat'
       }
     },
+    search () {
+      this.$store.dispatch('records/getAllRecords', this.searchKeyword)
+    },
     reloadList () {
-      this.$store.dispatch('records/getAllRecords')
-      console.log(this.from)
-      console.log(this.to)
-      // this.$refs.pager1.resetpage()
+      this.searchKeyword = {
+        title: '',
+        author: ''
+      }
+      this.$store.dispatch('records/getAllRecords', this.searchKeyword)
     },
     cellDBLClickEvent ({ row }) {
       this.editEvent(row)

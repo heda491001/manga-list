@@ -10,10 +10,10 @@ const getters = {}
 
 // actions
 const actions = {
-  getAllRecords ({ commit }) {
+  getAllRecords ({ commit }, params) {
     list.getRecordsList(records => {
       commit('setRecords', records)
-    })
+    }, params)
   },
   putRecords ({ commit }, record) {
     console.log('action put')
