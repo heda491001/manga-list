@@ -3,15 +3,22 @@
     <h1>list view</h1>
     <p>to show all records</p>
     <div>
-      <vxe-toolbar>
+      <vxe-toolbar
+        custom
+        import
+        export
+        :refresh="{query:reloadList,icon:'fa fa-refresh'}">
         <template v-slot:buttons>
-          <vxe-button icon="fa fa-refresh" @click="reloadList()"
-            >reload</vxe-button
-          >
           <vxe-button icon="fa fa-plus" @click="insertEvent()">add</vxe-button>
+          <vxe-button>
+            <template v-slot>search</template>
+          </vxe-button>
+          <vxe-input v-model="searchKeyword.title" placeholder="title"></vxe-input>
+          <vxe-input v-model="searchKeyword.author" placeholder="author"></vxe-input>
         </template>
       </vxe-toolbar>
       <vxe-table
+        resizable
         border
         show-header-overflow2
         show-overflow
@@ -108,6 +115,10 @@ export default {
       PageData: {
         currentPage: 1,
         pageSize: 10
+      },
+      searchKeyword: {
+        title: '',
+        author: ''
       }
     }
   },
