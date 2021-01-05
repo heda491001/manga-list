@@ -3,20 +3,25 @@
     <h1>list view</h1>
     <p>to show all records</p>
     <div>
-      <vxe-toolbar>
+      <vxe-toolbar
+        custom
+        import
+        export
+        :refresh="{query:reloadList,icon:'fa fa-refresh'}">
         <template v-slot:buttons>
-          <vxe-button icon="fa fa-refresh" @click="reloadList()"
-            >reload</vxe-button
-          >
           <vxe-button icon="fa fa-plus" @click="insertEvent()">add</vxe-button>
+          <vxe-button icon="fa fa-search" @click="search()">search</vxe-button>
+          <vxe-input v-model="searchKeyword.title" placeholder="title"></vxe-input>
+          <vxe-input v-model="searchKeyword.author" placeholder="author"></vxe-input>
         </template>
       </vxe-toolbar>
       <vxe-table
+        resizable
         border
         show-header-overflow2
         show-overflow
         highlight-hover-row
-        :data="recordslist"
+        :data="tableData"
         @cell-dblclick="cellDBLClickEvent"
       >
         <vxe-table-column
@@ -24,7 +29,7 @@
           sortable
           title="title"
           :filters="[{ data: '' }]"
-          :filter-method="filterMethod"
+          :filter-method="filterTitleMethod"
         >
           <template v-slot:filter="{ $panel, column }">
             <input
@@ -41,7 +46,7 @@
           sortable
           title="author"
           :filters="[{ data: '' }]"
-          :filter-method="filterMethod"
+          :filter-method="filterAuthorMethod"
         >
           <template v-slot:filter="{ $panel, column }">
             <input
@@ -57,8 +62,11 @@
           field="status"
           sortable
           title="status"
+          :filter-multiple="false"
+          :filters="[{label: '未購入', value: '1'}, {label: '本を購入済み', value: '2'},{label: 'kindleを購入済み', value: '3'}]"
           :formatter="formatstatus"
-        ></vxe-table-column>
+        >
+        </vxe-table-column>
         <vxe-table-column
           field="updatetime"
           sortable
@@ -80,6 +88,7 @@
         </vxe-table-column>
       </vxe-table>
       <editPopup :selectRow=selectRow :formData=formData></editPopup>
+      <pager ref="pager1"/>
     </div>
   </div>
 </template>
@@ -88,15 +97,27 @@
 import { mapState } from 'vuex'
 import 'font-awesome/css/font-awesome.css'
 import editPopup from './editPopup.vue'
+import pager from './pager.vue'
 
 export default {
   name: 'list',
-  components: { editPopup },
+  components: {
+    editPopup,
+    pager
+  },
   data () {
     return {
       showEditflag: false,
       selectRow: null,
-      formData: null
+      formData: null,
+      PageData: {
+        currentPage: 1,
+        pageSize: 10
+      },
+      searchKeyword: {
+        title: '',
+        author: ''
+      }
     }
   },
 
@@ -105,16 +126,35 @@ export default {
       get () { return this.showEditflag },
       set (val) { this.showEditflag = val }
     },
+    tablePage: {
+      get () { return this.PageData },
+      set (val) { this.PageData = val }
+    },
+    from () {
+      return this.tablePage.pageSize * (this.tablePage.currentPage - 1)
+    },
+    to () {
+      return this.tablePage.pageSize * this.tablePage.currentPage
+    },
     ...mapState({
-      recordslist: state => state.records.all
+      recordslist: state => state.records.all,
+      tableData (state) {
+        return state.records.all.slice(this.from, this.to)
+      },
+      totalResult (state) {
+        return state.records.all.length
+      }
     })
   },
   created () {
-    this.$store.dispatch('records/getAllRecords')
+    this.$store.dispatch('records/getAllRecords', this.searchKeyword)
   },
   methods: {
-    filterMethod ({ option, row }) {
-      return String(row.title).startsWith(option.data)
+    filterTitleMethod ({ option, row }) {
+      return (String(row.title).indexOf(option.data) !== -1)
+    },
+    filterAuthorMethod ({ option, row }) {
+      return (String(row.author).indexOf(option.data) !== -1)
     },
     formatstatus ({ cellValue }) {
       const flag = parseInt(cellValue)
@@ -129,8 +169,15 @@ export default {
           return 'undefeat'
       }
     },
+    search () {
+      this.$store.dispatch('records/getAllRecords', this.searchKeyword)
+    },
     reloadList () {
-      this.$store.dispatch('records/getAllRecords')
+      this.searchKeyword = {
+        title: '',
+        author: ''
+      }
+      this.$store.dispatch('records/getAllRecords', this.searchKeyword)
     },
     cellDBLClickEvent ({ row }) {
       this.editEvent(row)
