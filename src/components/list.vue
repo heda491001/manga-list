@@ -23,6 +23,8 @@
         highlight-hover-row
         :data="tableData"
         @cell-dblclick="cellDBLClickEvent"
+        :scroll-x="{enabled: false}"
+        :scroll-y="{enabled: false}"
       >
         <vxe-table-column
           field="title"
@@ -56,6 +58,13 @@
               v-model="option.data"
               @input="$panel.changeOption($event, !!option.data, option)"
             />
+          </template>
+        </vxe-table-column>
+        <vxe-table-column
+          title="cover"
+        >
+          <template v-slot>
+            <img src="https://private-image-hosting.s3-ap-northeast-1.amazonaws.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20210106105019.jpg" style="width: 100px;">
           </template>
         </vxe-table-column>
         <vxe-table-column
