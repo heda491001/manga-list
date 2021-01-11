@@ -16,15 +16,14 @@
         </template>
       </vxe-toolbar>
       <vxe-table
+        :scroll-x="{enabled: false}"
+        :scroll-y="{enabled: false}"
         resizable
         border
         show-header-overflow2
-        show-overflow
         highlight-hover-row
         :data="tableData"
         @cell-dblclick="cellDBLClickEvent"
-        :scroll-x="{enabled: false}"
-        :scroll-y="{enabled: false}"
       >
         <vxe-table-column
           field="title"
@@ -62,9 +61,14 @@
         </vxe-table-column>
         <vxe-table-column
           title="cover"
+          field="title"
         >
-          <template v-slot>
-            <img src="https://private-image-hosting.s3-ap-northeast-1.amazonaws.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20210106105019.jpg" style="width: 100px;">
+          <template slot-scope="{ row }">
+            <img
+              v-if="row.author"
+              src="https://private-image-hosting.s3-ap-northeast-1.amazonaws.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20210106105019.jpg"
+              width="250px"
+            >
           </template>
         </vxe-table-column>
         <vxe-table-column
@@ -126,7 +130,8 @@ export default {
       searchKeyword: {
         title: '',
         author: ''
-      }
+      },
+      img_src_dmy: 'https://private-image-hosting.s3-ap-northeast-1.amazonaws.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20210106105019.jpg'
     }
   },
 
