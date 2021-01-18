@@ -10,9 +10,9 @@
         :refresh="{query:reloadList,icon:'fa fa-refresh'}">
         <template v-slot:buttons>
           <vxe-button icon="fa fa-plus" @click="insertEvent()">add</vxe-button>
-          <vxe-button icon="fa fa-search" @click="search()">search</vxe-button>
           <vxe-input v-model="searchKeyword.title" placeholder="title"></vxe-input>
           <vxe-input v-model="searchKeyword.author" placeholder="author"></vxe-input>
+          <vxe-button icon="fa fa-search" @click="search()"></vxe-button>
         </template>
       </vxe-toolbar>
       <vxe-table
@@ -61,13 +61,13 @@
         </vxe-table-column>
         <vxe-table-column
           title="cover"
-          field="title"
+          field="cover"
         >
           <template slot-scope="{ row }">
             <img
-              v-if="row.author"
-              src="https://private-image-hosting.s3-ap-northeast-1.amazonaws.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20210106105019.jpg"
-              width="250px"
+              v-if="row.cover"
+              :src="row.cover"
+              width="100%"
             >
           </template>
         </vxe-table-column>
@@ -130,8 +130,7 @@ export default {
       searchKeyword: {
         title: '',
         author: ''
-      },
-      img_src_dmy: 'https://private-image-hosting.s3-ap-northeast-1.amazonaws.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20210106105019.jpg'
+      }
     }
   },
 
@@ -211,7 +210,8 @@ export default {
         title: row.title,
         author: row.author,
         status: row.status,
-        updatetime: row.updatetime
+        updatetime: row.updatetime,
+        cover: row.cover
       }
       this.selectRow = row
       this.showEdit = true

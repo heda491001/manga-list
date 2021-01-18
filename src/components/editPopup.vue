@@ -42,7 +42,7 @@ export default {
       },
       formItems: [
         {
-          title: 'book information',
+          title: 'Basic information',
           span: 24,
           titleAlign: 'left',
           titleWidth: 200,
@@ -77,6 +77,22 @@ export default {
               { label: '本を購入済み', value: '2' },
               { label: 'kindleを購入済み', value: '3' }
             ]
+          }
+        },
+        {
+          title: 'Other information',
+          span: 24,
+          titleAlign: 'left',
+          titleWidth: 200,
+          titlePrefix: { icon: 'fa fa-info-circle' }
+        },
+        {
+          field: 'cover',
+          title: 'cover',
+          span: 24,
+          itemRender: {
+            name: '$input',
+            props: { placeholder: 'please enter the cover path' }
           }
         },
         {
