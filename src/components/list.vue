@@ -10,16 +10,17 @@
         :refresh="{query:reloadList,icon:'fa fa-refresh'}">
         <template v-slot:buttons>
           <vxe-button icon="fa fa-plus" @click="insertEvent()">add</vxe-button>
-          <vxe-button icon="fa fa-search" @click="search()">search</vxe-button>
           <vxe-input v-model="searchKeyword.title" placeholder="title"></vxe-input>
           <vxe-input v-model="searchKeyword.author" placeholder="author"></vxe-input>
+          <vxe-button icon="fa fa-search" @click="search()"></vxe-button>
         </template>
       </vxe-toolbar>
       <vxe-table
+        :scroll-x="{enabled: false}"
+        :scroll-y="{enabled: false}"
         resizable
         border
         show-header-overflow2
-        show-overflow
         highlight-hover-row
         :data="tableData"
         @cell-dblclick="cellDBLClickEvent"
@@ -56,6 +57,18 @@
               v-model="option.data"
               @input="$panel.changeOption($event, !!option.data, option)"
             />
+          </template>
+        </vxe-table-column>
+        <vxe-table-column
+          title="cover"
+          field="cover"
+        >
+          <template slot-scope="{ row }">
+            <img
+              v-if="row.cover"
+              :src="row.cover"
+              width="100%"
+            >
           </template>
         </vxe-table-column>
         <vxe-table-column
@@ -197,7 +210,8 @@ export default {
         title: row.title,
         author: row.author,
         status: row.status,
-        updatetime: row.updatetime
+        updatetime: row.updatetime,
+        cover: row.cover
       }
       this.selectRow = row
       this.showEdit = true

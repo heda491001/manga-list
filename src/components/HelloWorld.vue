@@ -2,7 +2,6 @@
   <div class="hello">
     <h1>this is a test</h1>
     <h2>{{ msg }}</h2>
-    <editPopup v-bind:showEdit="showEdit"></editPopup>
   </div>
 </template>
 
